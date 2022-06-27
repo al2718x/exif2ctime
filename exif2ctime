@@ -64,6 +64,8 @@ if [ -d "$1" ]; then
 		EXIF=""
 		TYPE=" "
 		TYPE_STR=" "
+		CTIME=$(stat -c %Y "$F")
+		CTIME_YMD_HM=$(date -d @"$CTIME" +'%Y-%m-%d %H:%M')
 
 		if [[ "$FILE_EXT" =~ ^(jpg|crw|cr2|nef|dng)$ ]]; then
 			CNT_TOTAL_I="$CNT_TOTAL_I+1"
@@ -94,8 +96,7 @@ if [ -d "$1" ]; then
 			if [ "$TYPE" == "v" ]; then
 				CNT_CHECKED_V="$CNT_CHECKED_V+1"
 			fi
-			CTIME=$(stat -c %Y "$F")
-			CTIME_YMD_HM=$(date -d @"$CTIME" +'%Y-%m-%d %H:%M')
+
 			CTIME_YMD=${CTIME_YMD_HM:0:10}
 			CTIME_HM=${CTIME_YMD_HM:11:5}
 			EXIF_YMD_HM=$(date -d "$EXIF" +'%Y-%m-%d %H:%M') #%Y-%m-%d %H:%M.%S
