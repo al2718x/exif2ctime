@@ -10,7 +10,7 @@ C_GRAY='\033[1;90m'
 C_NO='\033[0m'
 
 if [ -d "$1" ]; then
-	printf "${C_WHITE}${1}${C_NO}\n"
+	printf "${C_WHITE}${1}${C_NO}/\n"
 	FIND_PATH="$1"
 	FIND_NAME=""
 	VERBOSE=""
@@ -123,7 +123,16 @@ if [ -d "$1" ]; then
 		fi
 	done <"$TMP"
 	rm "$TMP"
-	printf "Total: ${C_WHITE}${CNT_TOTAL}${C_NO} (${C_BLUE}${CNT_TOTAL_I}${C_NO},${C_YELLOW}${CNT_TOTAL_V}${C_NO},${C_GRAY}${CNT_TOTAL_O}${C_NO})  Checked: ${C_WHITE}${CNT_CHECKED}${C_NO} (${C_BLUE}${CNT_CHECKED_I}${C_NO},${C_YELLOW}${CNT_CHECKED_V}${C_NO},${C_GRAY}${CNT_CHECKED_O}${C_NO})  Wrong: ${C_WHITE}${CNT_WRONG}${C_NO}\n\n"
+
+	printf "Total: "
+	printf "${C_WHITE}${CNT_TOTAL}${C_NO} (${C_BLUE}${CNT_TOTAL_I}${C_NO},${C_YELLOW}${CNT_TOTAL_V}${C_NO},${C_GRAY}${CNT_TOTAL_O}${C_NO})  "
+	printf "Checked: "
+	printf "${C_WHITE}${CNT_CHECKED}${C_NO} (${C_BLUE}${CNT_CHECKED_I}${C_NO},${C_YELLOW}${CNT_CHECKED_V}${C_NO},${C_GRAY}${CNT_CHECKED_O}${C_NO})  "
+	if [ $CNT_WRONG -eq 0 ]; then
+		printf "Wrong: ${C_GREEN}${CNT_WRONG}${C_NO}\n\n"
+	else
+		printf "Wrong: ${C_RED}${CNT_WRONG}${C_NO}\n\n"
+	fi
 	exit 0
 else
 	SCRIPT_NAME=$(basename -- "${0}")
