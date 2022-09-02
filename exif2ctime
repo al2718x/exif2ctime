@@ -67,7 +67,7 @@ if [ -d "$1" ]; then
 		TYPE=" "
 		TYPE_STR=" "
 		CTIME=$(stat -c %Y "$F")
-		CTIME_YMD_HM=$(date -d @"$CTIME" +'%Y-%m-%d %H:%M')
+		CTIME_YMD_HM=$(date -d @"$CTIME" +'%Y-%m-%d %H:%M.%S')
 
 		if [[ "$FILE_EXT" =~ ^(jpg|crw|cr2|nef|dng)$ ]]; then
 			CNT_TOTAL_I="$CNT_TOTAL_I+1"
@@ -88,7 +88,7 @@ if [ -d "$1" ]; then
 		if [ "$EXIF" == "" ]; then
 			CNT_CHECKED_O="$CNT_CHECKED_O+1"
 			if [ "$VERBOSE" != "" ]; then
-				printf "${C_GRAY}${TYPE}  ${CTIME_YMD_HM}                    ${F}${C_NO}\n"
+				printf "${C_GRAY}${TYPE}  ${CTIME_YMD_HM}                       ${F}${C_NO}\n"
 			fi
 		else
 			CNT_CHECKED="$CNT_CHECKED+1"
@@ -100,11 +100,11 @@ if [ -d "$1" ]; then
 			fi
 
 			CTIME_YMD=${CTIME_YMD_HM:0:10}
-			CTIME_HM=${CTIME_YMD_HM:11:5}
+			CTIME_HM=${CTIME_YMD_HM:11:8}
 			DATE_EXIF=$(date -d "$EXIF" +%s)
-			EXIF_YMD_HM=$(date -d "$EXIF" +'%Y-%m-%d %H:%M') #%Y-%m-%d %H:%M.%S
+			EXIF_YMD_HM=$(date -d "$EXIF" +'%Y-%m-%d %H:%M.%S')
 			EXIF_YMD=${EXIF_YMD_HM:0:10}
-			EXIF_HM=${EXIF_YMD_HM:11:5}
+			EXIF_HM=${EXIF_YMD_HM:11:8}
 
 			if [ "$CTIME_YMD_HM" == "$EXIF_YMD_HM" ]; then #all equals
 				if [ "$VERBOSE" != "" ]; then
