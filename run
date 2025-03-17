@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+	exit 1
+fi
+
+E2C="exif2ctime"
+# OPTIONS=$(zenity --width=250 --height=250 --text="" --list --checklist --hide-header --hide-column=2 --column "" --column "" --column "" TRUE 0 "Run Script" FALSE 1 "Type Name Mask" TRUE 2 "Verbose Output" FALSE 3 "Write EXIF")
+OPTIONS=$(zenity --width=250 --height=200 --text="" --list --checklist --hide-header --hide-column=2 --column "" --column "" --column "" TRUE 0 "Run Script" TRUE 1 "Verbose Output" FALSE 2 "Write EXIF")
+
+if [ "$OPTIONS" != "" ]; then
+    if [[ "$OPTIONS" == *"0"* ]]; then
+        ARGS=""
+        if [[ "$OPTIONS" == *"1"* ]]; then
+            ARGS="$ARGS -v"
+        fi
+        if [[ "$OPTIONS" == *"2"* ]]; then
+            ARGS="$ARGS -w"
+        fi
+        CMD=""
+        while [[ $# > 0 ]]; do
+            CMD="${CMD}${E2C} \"$1\"$ARGS; "
+            shift
+        done
+        xterm -fa 'Monospace' -fs 12 -geometry "120" -e "${CMD}read line"
+        exit 0
+    fi
+fi
+
+exit 1
