@@ -7,7 +7,8 @@ Use: exif2ctime directory-to-scan [options]
  -w        write EXIF datetime to file ctime
 ```
 
-Or use `run` to execute gui.
+Or use: `run directory-to-scan` - to execute gui. \
+Сan be used as script for `nemo` file manager.
 
 System dependencies:
 - `dcraw` (for jpg|crw|cr2|nef|dng)
